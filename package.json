@@ -1,0 +1,23 @@
+{
+  "name": "amazoff-api",
+  "version": "1.0.0",
+  "description": "amazoff app api",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js"
+  },
+  "author": "coriordan",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1",
+    "nodemon": "^1.17.3"
+  }
+}
