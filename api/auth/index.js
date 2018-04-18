@@ -20,18 +20,6 @@ router.get('/logout', (req, res) => {
   res.status(200).send();
 });
 
-// register
-router.post('/register', asyncHandler(async (req, res) => {
-  // find user by email
-  // if already exists, return error
-  
-  const user = await User.create(req.body).catch((err) => {
-    res.send(500, err);
-  });
-  
-  res.status(201).json(user);
-}));
-
 function generateToken(user) {  
   return jwt.sign(user, config.secret, {
     expiresIn: 10080 // in seconds

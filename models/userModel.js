@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt-nodejs';
+import Cart from './cartModel';
 
 const Schema = mongoose.Schema;
 
@@ -15,9 +16,14 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  cart: {
+    type: Schema.Types.ObjectId, 
+    ref: 'Cart'
   }
 }, {timestamps: true});
 
+// encrypt user password before save
 UserSchema.pre('save', function(next) {
   const user = this;
   
@@ -30,8 +36,21 @@ UserSchema.pre('save', function(next) {
       if (err) return next(err);
       user.password = hash;
       next();
-    });    
+    });
   });
+});
+
+// initialise new user with empty cart
+UserSchema.pre('save', function(next) {
+  const user = this;
+  
+  if (user.isNew) {
+    Cart.create({user: user._id}, (err, cart) => {
+      if (err) return next(err);
+      user.cart = cart._id;
+      return next();
+    });
+  }
 });
 
 UserSchema.methods.verifyPassword = function(password, cb) {
