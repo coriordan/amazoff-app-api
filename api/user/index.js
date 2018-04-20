@@ -5,21 +5,27 @@ import auth from '../../passportConfig';
 
 const router = express.Router(); // eslint-disable-true
 
+// user profile
 router.get('/profile', auth.requireAuth, (req, res) => {
-  res.send(req.user);
+  res.send({userprofile: "true"});
 });
 
 // register
 router.post('/', asyncHandler(async (req, res) => {
-  // find user by email
-  // if already exists, return error
+  const {email} = req.body;
   
-  const user = await User.create(req.body).catch((err) => {
-    res.status(500).send(err);
+  // check for existing user
+  const existingUser = await User.findOne({email}).catch((err) => {
+    return res.status(403).send(err);
   });
   
-  res.status(201).json(user);
+  if (existingUser) {
+    return res.status(422).send({ error: 'That email address is already in use.' });
+  }
+  
+  const user = await User.create(req.body);
+  
+  return res.status(201).json(user);
 }));
-
 
 export default router;

@@ -43,7 +43,7 @@ UserSchema.pre('save', function(next) {
 // initialise new user with empty cart
 UserSchema.pre('save', function(next) {
   const user = this;
-  
+
   if (user.isNew) {
     Cart.create({user: user._id}, (err, cart) => {
       if (err) return next(err);
@@ -51,6 +51,7 @@ UserSchema.pre('save', function(next) {
       return next();
     });
   }
+  next();
 });
 
 UserSchema.methods.verifyPassword = function(password, cb) {

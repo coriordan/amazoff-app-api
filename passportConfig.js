@@ -11,7 +11,7 @@ passport.use(new JwtStrategy({
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: process.env.secret
     }, (jwtPayload, callback) => {
-      User.findOneById(jwtPayload.id).exec()
+      User.findById(jwtPayload._id)
       .then((user) => {
         return callback(null, user);
       })
@@ -25,7 +25,7 @@ passport.use(new JwtStrategy({
 passport.use(new LocalStrategy({
         usernameField: 'email'
     }, (email, password, callback) => {
-      User.findOne({email: email}).exec()
+      User.findOne({email: email})
       .then((user) => {
         user.verifyPassword(password, function(err, isMatch) {
           if (err) {return callback(err); }
@@ -40,4 +40,4 @@ passport.use(new LocalStrategy({
 ));
 
 exports.requireAuth = passport.authenticate('jwt', {session: false});
-exports.requireLogin = passport.authenticate('local', {session: false});
+exports.requireLogin = passport.authenticate('local', {session: false, failureFlash: true});
