@@ -5,8 +5,8 @@ const ProductVariantSchema = new Schema({
   format: {type: String, required: true},
   price: {
     currency: String,
-    amount: Number
-  } 
+    amount: Number,
+  },
 }, {timestamps: true});
 
 const ProductSchema = new Schema({

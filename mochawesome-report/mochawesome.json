@@ -1,0 +1,189 @@
+{
+  "stats": {
+    "suites": 3,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2018-04-24T09:21:56.275Z",
+    "end": "2018-04-24T09:21:57.310Z",
+    "duration": 1035,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "passPercentClass": "success",
+    "pendingPercentClass": "danger"
+  },
+  "suites": {
+    "uuid": "d37193b2-285b-48a7-a9c7-9bc84727deac",
+    "title": "",
+    "fullFile": "",
+    "file": "",
+    "beforeHooks": [],
+    "afterHooks": [],
+    "tests": [],
+    "suites": [
+      {
+        "uuid": "3da9eb80-d5cc-459d-a535-3ba35e4209d1",
+        "title": "Cart API unit test",
+        "fullFile": "/Users/cathal/Work/node/amazoff-api/test/testCartApi.js",
+        "file": "/test/testCartApi.js",
+        "beforeHooks": [],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "should return a new cart",
+            "fullTitle": "Cart API unit test should return a new cart",
+            "timedOut": false,
+            "duration": 401,
+            "state": "passed",
+            "speed": "slow",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.post('/api/cart').expect('Content-type', /json/).expect(201).end(function (err, res) {\n  console.log(res.body);\n  res.status.should.equal(201);\n  done();\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "0612789e-dd10-48a0-bf80-d25a0e572eaa",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "0612789e-dd10-48a0-bf80-d25a0e572eaa"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 401,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 2000
+      },
+      {
+        "uuid": "e720377f-1c14-4a10-a695-9fd498673905",
+        "title": "Products API unit test",
+        "fullFile": "/Users/cathal/Work/node/amazoff-api/test/testProductsApi.js",
+        "file": "/test/testProductsApi.js",
+        "beforeHooks": [],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "should return a collection of product documents",
+            "fullTitle": "Products API unit test should return a collection of product documents",
+            "timedOut": false,
+            "duration": 14,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.get('/api/products').expect('Content-type', /json/).expect(200).end(function (err, res) {\n  console.log('products returned: ' + res.body);\n  res.status.should.equal(200);\n  done();\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "c634fc07-2a05-4c99-a57d-8f3e0611cce3",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "c634fc07-2a05-4c99-a57d-8f3e0611cce3"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 14,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 2000
+      },
+      {
+        "uuid": "bd6ee4b4-c95f-45c3-bf7c-8564332c7f25",
+        "title": "Users API unit tests",
+        "fullFile": "/Users/cathal/Work/node/amazoff-api/test/testUserApi.js",
+        "file": "/test/testUserApi.js",
+        "beforeHooks": [
+          {
+            "title": "\"before each\" hook",
+            "fullTitle": "Users API unit tests \"before each\" hook",
+            "timedOut": false,
+            "duration": 0,
+            "pass": false,
+            "fail": false,
+            "pending": false,
+            "code": "console.log('before each user api test');",
+            "err": {},
+            "isRoot": false,
+            "uuid": "0b35e273-3be0-4d0f-97c5-aad8c1ef7b25",
+            "isHook": true,
+            "skipped": false
+          }
+        ],
+        "afterHooks": [],
+        "tests": [
+          {
+            "title": "should deny access to user profile (not authenticated)",
+            "fullTitle": "Users API unit tests should deny access to user profile (not authenticated)",
+            "timedOut": false,
+            "duration": 206,
+            "state": "passed",
+            "speed": "slow",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.post('/api/users/').send({ 'firstname': 'Test 1',\n  'lastname': ' User 1',\n  'email': 'testuser1@example.com',\n  'password': 'test' }).expect('Content-type', /json/).expect(201) // This is the HTTP response\n.end(function (err, res) {\n  var userId = res.body._id;\n  superserver.get('/api/users/' + userId).expect('Content-type', /json/).expect(401) // unauthorised\n  .end(function (err, res) {\n    // HTTP status should be 401\n    res.status.should.equal(401);\n    done();\n  });\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "b4ed850a-d6dc-47f0-a8ed-0a03defb5565",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "should authenticate user",
+            "fullTitle": "Users API unit tests should authenticate user",
+            "timedOut": false,
+            "duration": 364,
+            "state": "passed",
+            "speed": "slow",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.post('/api/users/').send({ 'firstname': 'Test 2',\n  'lastname': ' User 2',\n  'email': 'testuser2@example.com',\n  'password': 'test' }).expect('Content-type', /json/).expect(201) // This is the HTTP response\n.end(function (err, res) {\n  superserver.post('/api/auth/').send({ 'email': 'testuser2@example.com',\n    'password': 'test' }).expect('Content-type', /json/).expect(200).end(function (err, res) {\n    res.body.token.should.not.be.empty();\n    done();\n  });\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "b1f64c4c-8087-450c-9518-1ed7ead97969",
+            "isHook": false,
+            "skipped": false
+          }
+        ],
+        "suites": [],
+        "passes": [
+          "b4ed850a-d6dc-47f0-a8ed-0a03defb5565",
+          "b1f64c4c-8087-450c-9518-1ed7ead97969"
+        ],
+        "failures": [],
+        "pending": [],
+        "skipped": [],
+        "duration": 570,
+        "root": false,
+        "rootEmpty": false,
+        "_timeout": 2000
+      }
+    ],
+    "passes": [],
+    "failures": [],
+    "pending": [],
+    "skipped": [],
+    "duration": 0,
+    "root": true,
+    "rootEmpty": true,
+    "_timeout": 2000
+  },
+  "copyrightYear": 2018
+}

@@ -6,7 +6,7 @@ import auth from '../../passportConfig';
 const router = express.Router(); // eslint-disable-true
 
 // user profile
-router.get('/profile', auth.requireAuth, (req, res) => {
+router.get('/:id', auth.requireAuth, (req, res) => {
   res.send({userprofile: "true"});
 });
 

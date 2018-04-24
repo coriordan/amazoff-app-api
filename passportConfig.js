@@ -9,7 +9,7 @@ dotenv.config();
 // JWT token strategy
 passport.use(new JwtStrategy({
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-        secretOrKey: process.env.secret
+        secretOrKey: process.env.secret,
     }, (jwtPayload, callback) => {
       User.findById(jwtPayload._id)
       .then((user) => {
@@ -23,21 +23,24 @@ passport.use(new JwtStrategy({
 
 // local strategy
 passport.use(new LocalStrategy({
-        usernameField: 'email'
+        usernameField: 'email',
     }, (email, password, callback) => {
       User.findOne({email: email})
       .then((user) => {
         user.verifyPassword(password, function(err, isMatch) {
-          if (err) {return callback(err); }
-          if (!isMatch) {return callback(null, false, { error: "Login details could not be verified."}); }
+          if (err) {
+return callback(err);
+}
+          if (!isMatch) {
+return callback(null, false, {error: 'Login details could not be verified.'});
+}
           return callback(null, user);
         });
       })
       .catch((err) => {
         callback(err);
-      })
+      });
     }
 ));
 
 exports.requireAuth = passport.authenticate('jwt', {session: false});
-exports.requireLogin = passport.authenticate('local', {session: false, failureFlash: true});

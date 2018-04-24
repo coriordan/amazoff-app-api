@@ -3,17 +3,34 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import productsRouter from './api/products';
 import authRouter from './api/auth';
-import userRouter from './api/user';
+import usersRouter from './api/user';
+import cartRouter from './api/cart';
 import mongoose from 'mongoose';
+import {Mockgoose} from 'mockgoose';
 import {loadProducts} from './productsData';
 import logger from 'morgan';
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 const port = process.env.PORT;
 
-mongoose.connect(process.env.mongoDB);
+// Connect to database
+if (process.env.NODE_ENV == 'test') {
+  // use mockgoose for testing
+  const mockgoose = new Mockgoose(mongoose);
+  mockgoose.prepareStorage().then(() => {
+    mongoose.connect(process.env.mongoDB);
+  });
+} else {
+  // use real deal for everything else
+  mongoose.connect(process.env.mongoDB);
+}
+
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error: '+ err);
+  process.exit(-1);
+});
 
 if (process.env.seedDb) {
   loadProducts();
@@ -25,7 +42,8 @@ app.use(logger('dev'));
 
 app.use('/api/products', productsRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/user', userRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/cart', cartRouter);
 app.use(express.static('public'));
 
 // error handling
