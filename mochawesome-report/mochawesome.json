@@ -1,14 +1,14 @@
 {
   "stats": {
     "suites": 3,
-    "tests": 4,
-    "passes": 4,
+    "tests": 7,
+    "passes": 7,
     "pending": 0,
     "failures": 0,
-    "start": "2018-04-24T09:21:56.275Z",
-    "end": "2018-04-24T09:21:57.310Z",
-    "duration": 1035,
-    "testsRegistered": 4,
+    "start": "2018-04-25T14:14:55.968Z",
+    "end": "2018-04-25T14:14:57.286Z",
+    "duration": 1318,
+    "testsRegistered": 7,
     "passPercent": 100,
     "pendingPercent": 0,
     "other": 0,
@@ -19,7 +19,7 @@
     "pendingPercentClass": "danger"
   },
   "suites": {
-    "uuid": "d37193b2-285b-48a7-a9c7-9bc84727deac",
+    "uuid": "f48655ed-a81a-4bc3-a367-57b314bd4113",
     "title": "",
     "fullFile": "",
     "file": "",
@@ -28,7 +28,7 @@
     "tests": [],
     "suites": [
       {
-        "uuid": "3da9eb80-d5cc-459d-a535-3ba35e4209d1",
+        "uuid": "381a53a2-570e-4cec-9a26-65d3ddacfbd4",
         "title": "Cart API unit test",
         "fullFile": "/Users/cathal/Work/node/amazoff-api/test/testCartApi.js",
         "file": "/test/testCartApi.js",
@@ -39,34 +39,88 @@
             "title": "should return a new cart",
             "fullTitle": "Cart API unit test should return a new cart",
             "timedOut": false,
-            "duration": 401,
+            "duration": 630,
             "state": "passed",
             "speed": "slow",
             "pass": true,
             "fail": false,
             "pending": false,
-            "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.post('/api/cart').expect('Content-type', /json/).expect(201).end(function (err, res) {\n  console.log(res.body);\n  res.status.should.equal(201);\n  done();\n});",
+            "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.post('/api/cart').expect('Content-type', /json/).expect(201).end(function (err, res) {\n  res.status.should.equal(201);\n  done();\n});",
             "err": {},
             "isRoot": false,
-            "uuid": "0612789e-dd10-48a0-bf80-d25a0e572eaa",
+            "uuid": "57ea15a1-a892-4013-a4d3-a015da75f246",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "should add an item to a cart",
+            "fullTitle": "Cart API unit test should add an item to a cart",
+            "timedOut": false,
+            "duration": 45,
+            "state": "passed",
+            "speed": "medium",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var superserver = (0, _supertest2.default)(_index.app);\nvar cartId = void 0;\nsuperserver.post('/api/cart').expect('Content-type', /json/).expect(201).end(function (err, res) {\n  cartId = res.body._id; // cart id\n  superserver.get('/api/products').expect('Content-type', /json/).expect(200).end(function (err, res) {\n    var productId = res.body[0]._id;\n    superserver.put('/api/cart/' + cartId).send({ product: productId, quantity: 1 }) // add item\n    .expect('Content-type', /json/).expect(201).end(function (err, res) {\n      res.status.should.equal(201);\n      done();\n    });\n  });\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "ed4ed182-c826-4942-884a-59947fe2df2d",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "should remove an item from the cart",
+            "fullTitle": "Cart API unit test should remove an item from the cart",
+            "timedOut": false,
+            "duration": 29,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var superserver = (0, _supertest2.default)(_index.app);\nvar cartId = void 0;\nsuperserver.post('/api/cart').expect('Content-type', /json/).expect(201).end(function (err, res) {\n  // cart created\n  cartId = res.body._id; // cart id\n  superserver.get('/api/products').expect('Content-type', /json/).expect(200).end(function (err, res) {\n    // products returned\n    var productId = res.body[0]._id;\n    superserver.put('/api/cart/' + cartId).send({ product: productId, quantity: 1 }) // add item\n    .expect('Content-type', /json/).expect(201).end(function (err, res) {\n      // product added\n      var lineItemId = res.body.items[0]._id;\n      superserver.delete('/api/cart/' + cartId).send({ lineItem: lineItemId }).expect('Content-type', /json/).expect(200).end(function (err, res) {\n        // lineitem deleted\n        res.status.should.equal(200);\n        res.body.items.should.be.empty();\n        done();\n      });\n    });\n  });\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "7f4bcfd6-bdea-4a49-b9bc-e9c2ae6dad41",
+            "isHook": false,
+            "skipped": false
+          },
+          {
+            "title": "should increase quantity of item in cart",
+            "fullTitle": "Cart API unit test should increase quantity of item in cart",
+            "timedOut": false,
+            "duration": 27,
+            "state": "passed",
+            "speed": "fast",
+            "pass": true,
+            "fail": false,
+            "pending": false,
+            "code": "var superserver = (0, _supertest2.default)(_index.app);\nvar cartId = void 0;\nsuperserver.post('/api/cart').expect('Content-type', /json/).expect(201).end(function (err, res) {\n  // cart created\n  cartId = res.body._id; // cart id\n  superserver.get('/api/products').expect('Content-type', /json/).expect(200).end(function (err, res) {\n    // products returned\n    var productId = res.body[0]._id;\n    superserver.put('/api/cart/' + cartId).send({ product: productId, quantity: 1 }) // add item\n    .expect('Content-type', /json/).expect(201).end(function (err, res) {\n      // product added\n      superserver.put('/api/cart/' + cartId).send({ product: productId, quantity: 1 }) // add same item\n      .expect('Content-type', /json/).expect(201).end(function (err, res) {\n        // console.log(res.body);\n        done();\n      });\n    });\n  });\n});",
+            "err": {},
+            "isRoot": false,
+            "uuid": "84b2d006-0295-4484-b4d3-0f6e94683877",
             "isHook": false,
             "skipped": false
           }
         ],
         "suites": [],
         "passes": [
-          "0612789e-dd10-48a0-bf80-d25a0e572eaa"
+          "57ea15a1-a892-4013-a4d3-a015da75f246",
+          "ed4ed182-c826-4942-884a-59947fe2df2d",
+          "7f4bcfd6-bdea-4a49-b9bc-e9c2ae6dad41",
+          "84b2d006-0295-4484-b4d3-0f6e94683877"
         ],
         "failures": [],
         "pending": [],
         "skipped": [],
-        "duration": 401,
+        "duration": 731,
         "root": false,
         "rootEmpty": false,
         "_timeout": 2000
       },
       {
-        "uuid": "e720377f-1c14-4a10-a695-9fd498673905",
+        "uuid": "2ff95d76-271f-4195-b87f-38a7cd6133ef",
         "title": "Products API unit test",
         "fullFile": "/Users/cathal/Work/node/amazoff-api/test/testProductsApi.js",
         "file": "/test/testProductsApi.js",
@@ -77,7 +131,7 @@
             "title": "should return a collection of product documents",
             "fullTitle": "Products API unit test should return a collection of product documents",
             "timedOut": false,
-            "duration": 14,
+            "duration": 8,
             "state": "passed",
             "speed": "fast",
             "pass": true,
@@ -86,25 +140,25 @@
             "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.get('/api/products').expect('Content-type', /json/).expect(200).end(function (err, res) {\n  console.log('products returned: ' + res.body);\n  res.status.should.equal(200);\n  done();\n});",
             "err": {},
             "isRoot": false,
-            "uuid": "c634fc07-2a05-4c99-a57d-8f3e0611cce3",
+            "uuid": "a39a81de-1924-4ff9-acf9-33527ee92383",
             "isHook": false,
             "skipped": false
           }
         ],
         "suites": [],
         "passes": [
-          "c634fc07-2a05-4c99-a57d-8f3e0611cce3"
+          "a39a81de-1924-4ff9-acf9-33527ee92383"
         ],
         "failures": [],
         "pending": [],
         "skipped": [],
-        "duration": 14,
+        "duration": 8,
         "root": false,
         "rootEmpty": false,
         "_timeout": 2000
       },
       {
-        "uuid": "bd6ee4b4-c95f-45c3-bf7c-8564332c7f25",
+        "uuid": "af6d498a-4bfe-446e-ac22-6fec676788b5",
         "title": "Users API unit tests",
         "fullFile": "/Users/cathal/Work/node/amazoff-api/test/testUserApi.js",
         "file": "/test/testUserApi.js",
@@ -120,7 +174,7 @@
             "code": "console.log('before each user api test');",
             "err": {},
             "isRoot": false,
-            "uuid": "0b35e273-3be0-4d0f-97c5-aad8c1ef7b25",
+            "uuid": "785aa590-7118-4865-a9cc-bd1ae1085ab2",
             "isHook": true,
             "skipped": false
           }
@@ -131,7 +185,7 @@
             "title": "should deny access to user profile (not authenticated)",
             "fullTitle": "Users API unit tests should deny access to user profile (not authenticated)",
             "timedOut": false,
-            "duration": 206,
+            "duration": 191,
             "state": "passed",
             "speed": "slow",
             "pass": true,
@@ -140,7 +194,7 @@
             "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.post('/api/users/').send({ 'firstname': 'Test 1',\n  'lastname': ' User 1',\n  'email': 'testuser1@example.com',\n  'password': 'test' }).expect('Content-type', /json/).expect(201) // This is the HTTP response\n.end(function (err, res) {\n  var userId = res.body._id;\n  superserver.get('/api/users/' + userId).expect('Content-type', /json/).expect(401) // unauthorised\n  .end(function (err, res) {\n    // HTTP status should be 401\n    res.status.should.equal(401);\n    done();\n  });\n});",
             "err": {},
             "isRoot": false,
-            "uuid": "b4ed850a-d6dc-47f0-a8ed-0a03defb5565",
+            "uuid": "8c6d7f6c-964a-4b91-86e1-22a32686a0db",
             "isHook": false,
             "skipped": false
           },
@@ -148,7 +202,7 @@
             "title": "should authenticate user",
             "fullTitle": "Users API unit tests should authenticate user",
             "timedOut": false,
-            "duration": 364,
+            "duration": 358,
             "state": "passed",
             "speed": "slow",
             "pass": true,
@@ -157,20 +211,20 @@
             "code": "var superserver = (0, _supertest2.default)(_index.app);\nsuperserver.post('/api/users/').send({ 'firstname': 'Test 2',\n  'lastname': ' User 2',\n  'email': 'testuser2@example.com',\n  'password': 'test' }).expect('Content-type', /json/).expect(201) // This is the HTTP response\n.end(function (err, res) {\n  superserver.post('/api/auth/').send({ 'email': 'testuser2@example.com',\n    'password': 'test' }).expect('Content-type', /json/).expect(200).end(function (err, res) {\n    res.body.token.should.not.be.empty();\n    done();\n  });\n});",
             "err": {},
             "isRoot": false,
-            "uuid": "b1f64c4c-8087-450c-9518-1ed7ead97969",
+            "uuid": "f7961add-cbc6-4d1f-84e5-5498dd0d5936",
             "isHook": false,
             "skipped": false
           }
         ],
         "suites": [],
         "passes": [
-          "b4ed850a-d6dc-47f0-a8ed-0a03defb5565",
-          "b1f64c4c-8087-450c-9518-1ed7ead97969"
+          "8c6d7f6c-964a-4b91-86e1-22a32686a0db",
+          "f7961add-cbc6-4d1f-84e5-5498dd0d5936"
         ],
         "failures": [],
         "pending": [],
         "skipped": [],
-        "duration": 570,
+        "duration": 549,
         "root": false,
         "rootEmpty": false,
         "_timeout": 2000

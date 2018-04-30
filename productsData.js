@@ -11,22 +11,10 @@ const products = [
     type: 'book',
     published: '2014-04-14',
     imageUrl: '/products/books/images/1.jpg',
-    variants: [
-      {
-        format: 'Kindle',
-        price: {
-          currency: 'EUR',
-          amount: 7.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 22.95,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 22.95,
+    },
   },
   {
     title: 'Envisioning Information',
@@ -37,22 +25,10 @@ const products = [
     type: 'book',
     published: '1990-01-01',
     imageUrl: '/products/books/images/2.jpg',
-    variants: [
-      {
-        format: 'Hardcover',
-        price: {
-          currency: 'EUR',
-          amount: 24.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 34.96,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 34.96,
+    },
   },
   {
     title: 'About Face: The Essentials of Interaction Design',
@@ -66,22 +42,10 @@ const products = [
     type: 'book',
     published: '2014-09-19',
     imageUrl: '/products/books/images/3.jpg',
-    variants: [
-      {
-        format: 'Kindle',
-        price: {
-          currency: 'EUR',
-          amount: 7.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 36.47,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 36.47,
+    },
   },
   {
     title: 'HTML and CSS: Design and Build Websites',
@@ -92,22 +56,10 @@ const products = [
     type: 'book',
     published: '2011-11-18',
     imageUrl: '/products/books/images/4.jpg',
-    variants: [
-      {
-        format: 'Hardcover',
-        price: {
-          currency: 'EUR',
-          amount: 28.75,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 20.53,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 28.75,
+    },
   },
   {
     title: 'Rework: Change the Way You Work Forever',
@@ -118,29 +70,10 @@ const products = [
     type: 'book',
     published: '2010-03-18',
     imageUrl: '/products/books/images/5.jpg',
-    variants: [
-      {
-        format: 'Kindle',
-        price: {
-          currency: 'EUR',
-          amount: 7.99,
-        },
-      },
-      {
-        format: 'Hardcover',
-        price: {
-          currency: 'EUR',
-          amount: 22.18,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 17.68,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 22.18,
+    },
   },
   {
     title: 'Remote: Office Not Required',
@@ -151,29 +84,10 @@ const products = [
     type: 'book',
     published: '2013-10-29',
     imageUrl: '/products/books/images/6.jpg',
-    variants: [
-      {
-        format: 'Kindle',
-        price: {
-          currency: 'EUR',
-          amount: 7.99,
-        },
-      },
-      {
-        format: 'Hardcover',
-        price: {
-          currency: 'EUR',
-          amount: 20.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 15.59,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 20.99,
+    },
   },
   {
     title: 'Beautiful Evidence',
@@ -184,22 +98,10 @@ const products = [
     type: 'book',
     published: '2006-07-01',
     imageUrl: '/products/books/images/7.jpg',
-    variants: [
-      {
-        format: 'Hardcover',
-        price: {
-          currency: 'EUR',
-          amount: 40.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 28.87,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 28.87,
+    },
   },
   {
     title: 'Hooked: How to Build Habit-Forming Products',
@@ -210,22 +112,10 @@ const products = [
     type: 'book',
     published: '2014-01-01',
     imageUrl: '/products/books/images/8.jpg',
-    variants: [
-      {
-        format: 'Hardcover',
-        price: {
-          currency: 'EUR',
-          amount: 40.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 18.56,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 18.56,
+    },
   },
   {
     title: 'A Practical Guide to Designing for the Web',
@@ -236,22 +126,10 @@ const products = [
     type: 'book',
     published: '2009-01-01',
     imageUrl: '/products/books/images/9.jpg',
-    variants: [
-      {
-        format: 'Kindle',
-        price: {
-          currency: 'EUR',
-          amount: 7.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 31.90,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 31.90,
+    },
   },
   {
     title: 'Thinking with Type',
@@ -262,22 +140,10 @@ const products = [
     type: 'books',
     published: '2008-02-11',
     imageUrl: '/products/books/images/10.jpg',
-    variants: [
-      {
-        format: 'Kindle',
-        price: {
-          currency: 'EUR',
-          amount: 7.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 27.25,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 27.25,
+    },
   },
   {
     title: 'Mastering Regular Expressions',
@@ -288,22 +154,10 @@ const products = [
     type: 'book',
     published: '2006-06-02',
     imageUrl: '/products/books/images/11.jpg',
-    variants: [
-      {
-        format: 'Kindle',
-        price: {
-          currency: 'EUR',
-          amount: 7.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 24.90,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 24.90,
+    },
   },
   {
     title: 'Design Patterns in Ruby',
@@ -314,22 +168,10 @@ const products = [
     type: 'book',
     published: '2008-06-02',
     imageUrl: '/products/books/images/12.jpg',
-    variants: [
-      {
-        format: 'Kindle',
-        price: {
-          currency: 'EUR',
-          amount: 7.99,
-        },
-      },
-      {
-        format: 'Paperback',
-        price: {
-          currency: 'EUR',
-          amount: 21.80,
-        },
-      },
-    ],
+    price: {
+      currency: 'EUR',
+      amount: 21.80,
+    },
   },
 ];
 /* eslint-disable */
