@@ -2,7 +2,6 @@ import express from 'express';
 import asyncHandler from 'express-async-handler';
 import Cart from '../../models/cartModel';
 import Product from '../../models/productModel';
-import LineItem from '../../models/lineItemModel';
 
 const router = express.Router(); // eslint-disable-true
 
@@ -32,31 +31,26 @@ router.put('/:id', asyncHandler(async (req, res) => {
   if(!cart) return res.status(404).json({error: 'Cart does not exist'});
   
   if (req.query.action === 'updateQuantity') { // update quantity of existing item
-    let lineItem = cart.items.find(
-      item => item._id.toString() === lineItemId);
+    let lineItem = cart.items.id(lineItemId);
 
     if (!lineItem) return res.status(404).json({error: 'Cart item does not exist'});
-      
-    await lineItem.update({quantity: quantity}); // apply new quantity
+    
+    lineItem.set({quantity: quantity}); // apply new quantity
+    await cart.save();
   } else {
     let existingItem = cart.items.find(
       item => item.product._id.toString() === productId); // is item already in cart
 
     if (existingItem) {
       existingItem.quantity++;
-      await existingItem.save();
+      await cart.save();
     } else {
       const product = await Product.findById(productId);
-      const lineItem = await LineItem.create({product: product._id, 
-                     cart: cart._id, 
-                     quantity: 1});
-
-      cart.items.push(lineItem); // add item to cart
+      cart.items.push({product: product._id, quantity: 1}); // add item to cart
+      await cart.save();  
     }
   }
-  
-  await cart.save();
-  cart = await Cart.findOne({_id: id}); // reload cart
+
   res.status(201).json(cart);
 }));
 
@@ -64,24 +58,21 @@ router.put('/:id', asyncHandler(async (req, res) => {
 router.delete('/:id', asyncHandler(async (req, res) => {
   const id = req.params.id;
   const lineItemId = req.body.lineItem;
-
-  const lineItem = await LineItem.findById(lineItemId);
-  if (!lineItem) return res.status(404).json({error: 'LineItem does not exist'});
   
   let cart = await Cart.findOne({_id: id});
-                        
-  if(!cart) return res.status(404).json({error: 'Cart does not exist'});
+  if (!cart) return res.status(404).json({error: 'Cart does not exist'});
+    
+  const lineItem = cart.items.id(lineItemId);
+  if (!lineItem) return res.status(404).json({error: 'LineItem does not exist'});
 
   if (lineItem.quantity > 1) {
     lineItem.quantity--; // decrease quantity by 1
-    await lineItem.save();
+    await cart.save();
   } else {
-    cart.items.pull(lineItem._id); // remove item from cart
-    await lineItem.remove();
+    cart.items.id(lineItem._id).remove(); // remove item from cart
+    cart.save();
   }
-  
-  await cart.save();
-  cart = await Cart.findOne({_id: id}); // reload cart
+
   return res.status(200).json(cart);
 }));
 

@@ -1,18 +1,23 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const CartSchema = new Schema({
-  items: [{type: Schema.Types.ObjectId, ref: 'LineItem'}],
+// LineItem schema
+const LineItemSchema = new Schema({
+  product: {type: Schema.Types.ObjectId, ref: 'Product'},
+  quantity: Number,
 }, {timestamps: true});
 
-function populateItems(next) {  //eslint-disable-line
-  this.populate({path: 'items', //eslint-disable-line
-    populate: {path: 'product'},
-  });
+// Cart schema
+const CartSchema = new Schema({
+  items: [LineItemSchema],
+}, {timestamps: true});
+
+function populateProduct(next) {  //eslint-disable-line
+  this.populate({path: 'items.product'});
   next();
 }
 
-CartSchema.pre('find', populateItems);
-CartSchema.pre('findOne', populateItems);
+CartSchema.pre('find', populateProduct);
+CartSchema.pre('findOne', populateProduct);
 
 export default mongoose.model('Cart', CartSchema);
