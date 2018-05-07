@@ -10,7 +10,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
   const id = req.params.id;
   const cart = await Cart.findOne({_id: id});
 
-  return res.send({cart});
+  return res.send(cart);
 }));
 
 // create a cart
@@ -58,21 +58,16 @@ router.put('/:id', asyncHandler(async (req, res) => {
 router.delete('/:id', asyncHandler(async (req, res) => {
   const id = req.params.id;
   const lineItemId = req.body.lineItem;
-  
+
   let cart = await Cart.findOne({_id: id});
   if (!cart) return res.status(404).json({error: 'Cart does not exist'});
-    
+
   const lineItem = cart.items.id(lineItemId);
   if (!lineItem) return res.status(404).json({error: 'LineItem does not exist'});
 
-  if (lineItem.quantity > 1) {
-    lineItem.quantity--; // decrease quantity by 1
-    await cart.save();
-  } else {
-    cart.items.id(lineItem._id).remove(); // remove item from cart
-    cart.save();
-  }
-
+  cart.items.id(lineItem._id).remove(); // remove item from cart
+  cart.save();
+  
   return res.status(200).json(cart);
 }));
 

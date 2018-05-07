@@ -10,6 +10,13 @@ router.get('/', asyncHandler(async (req, res) => {
   return res.send(products);
 }));
 
+// Get a Product
+router.get('/:id', asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const product = await Product.findById(id);
+  return res.send(product);
+}));
+
 // Create Product
 router.post('/', asyncHandler(async (req, res) => {
   const product = await Product.create(req.body);
