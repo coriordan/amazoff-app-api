@@ -45,6 +45,9 @@ The Amazoff api uses the JSON Web Token (JWT) method for representing an authent
 to manage the authentication strategies used by the api (local strategy for basic authentication and JWT strategy for 
 api authentication).
 
+API calls that require authentication
++ /api/users/:id - return a user/get user profile (GET) 
+
 ## Testing
 I employed a Behaviour Driven Development approach when unit testing the api end points for the Amazoff API. I used Mocha as the 
 unit testing framework along with 'should' for describing the behaviour of the api within the tests.
