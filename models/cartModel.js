@@ -10,6 +10,7 @@ const LineItemSchema = new Schema({
 // Cart schema
 const CartSchema = new Schema({
   items: [LineItemSchema],
+  order: {type: Schema.Types.ObjectId, ref: 'Order'},
 }, {timestamps: true});
 
 function populateProduct(next) {  //eslint-disable-line

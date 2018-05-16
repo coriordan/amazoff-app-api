@@ -61,12 +61,18 @@ router.delete('/:id', asyncHandler(async (req, res) => {
 
   let cart = await Cart.findOne({_id: id});
   if (!cart) return res.status(404).json({error: 'Cart does not exist'});
-
-  const lineItem = cart.items.id(lineItemId);
-  if (!lineItem) return res.status(404).json({error: 'LineItem does not exist'});
-
-  cart.items.id(lineItem._id).remove(); // remove item from cart
-  cart.save();
+  
+  if (req.query.action === 'all') { // delete all items from cart
+    cart.items.forEach((item, index) => {
+      cart.items.pull({_id: item._id});
+    });
+  } else {
+    const lineItem = cart.items.id(lineItemId);
+    if (!lineItem) return res.status(404).json({error: 'LineItem does not exist'});
+    cart.items.id(lineItem._id).remove(); // remove item from cart  
+  }
+  
+  await cart.save();
   
   return res.status(200).json(cart);
 }));

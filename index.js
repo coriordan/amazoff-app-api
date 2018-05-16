@@ -5,6 +5,7 @@ import productsRouter from './api/products';
 import authRouter from './api/auth';
 import usersRouter from './api/user';
 import cartRouter from './api/cart';
+import orderRouter from './api/order';
 import mongoose from 'mongoose';
 import {Mockgoose} from 'mockgoose';
 import {loadProducts} from './productsData';
@@ -32,7 +33,7 @@ mongoose.connection.on('error', (err) => {
   process.exit(-1);
 });
 
-if (process.env.seedDb) {
+if (process.env.seedDb && process.env.NODE_ENV == 'test') {
   loadProducts();
 }
 
@@ -44,6 +45,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/cart', cartRouter);
+app.use('/api/order', orderRouter);
 app.use(express.static('public'));
 
 // error handling

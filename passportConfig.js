@@ -23,17 +23,17 @@ passport.use(new JwtStrategy({
 
 // local strategy
 passport.use(new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'username',
     }, (email, password, callback) => {
       User.findOne({email: email})
       .then((user) => {
         user.verifyPassword(password, function(err, isMatch) {
           if (err) {
-return callback(err);
-}
+            return callback(err);
+          }
           if (!isMatch) {
-return callback(null, false, {error: 'Login details could not be verified.'});
-}
+            return callback(null, false, {error: 'Login details could not be verified.'});
+          }
           return callback(null, user);
         });
       })
